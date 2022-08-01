@@ -32,10 +32,10 @@ def getProxy():
     return({"https://": f"http://{next(proxies_rotated)}"})
 
 def checkProxy(proxy):
-    global dead_proxies, all_proxes_dead
+    global dead_proxies, all_proxies_dead
 
     if len(proxies)-len(dead_proxies)<=1:
-        all_proxes_dead=True
+        all_proxies_dead=True
         return "stop"
 
     if proxy in dead_proxies:
@@ -47,7 +47,7 @@ def printt(text):
     sys.stdout.write("\n"+text)
 
 def genAccount():
-    global successful, failed, dead_proxies, all_proxes_dead
+    global successful, failed, dead_proxies, all_proxies_dead
     nick = acc_name+" | "+getRandomText(5)
     passw = getRandomString(12)
     email = getRandomText(7)+"@gmail.com"
@@ -62,7 +62,7 @@ def genAccount():
         else:
             break
 
-    if all_proxes_dead==True:
+    if all_proxies_dead==True:
         return
 
 
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     currentaccs=len(getList(result_file))
     proxies=getList(proxy_file)
     proxies_rotated=cycle(proxies)
-    all_proxes_dead=False
+    all_proxies_dead=False
     threads=[]
     combos=[]
     dead_proxies=[]
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     threading.Thread(target=refreshTitle).start()
     while successful<accs_to_gen:
-        if all_proxes_dead==False:
+        if all_proxies_dead==False:
             if threading.active_count()<=max_threads:
                 threading.Thread(target=genAccount).start()
         else:
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     time.sleep(5)
 
     print("")
-    if all_proxes_dead==True:
+    if all_proxies_dead==True:
         printt("All proxies dead/ratelimited,\ntry again in over an hour or with different proxies")
     printt(f"Finished. Combos saved into {result_file}")
     printt(f"Generated {successful} accounts")
