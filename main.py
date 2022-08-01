@@ -102,7 +102,7 @@ def genAccount():
             failed=failed+1
             result=f"- | {email}:{passw} | dead proxy"
             if r.status_code==429:
-                result=f"- | {email}:{passw} | ratelimited prox"
+                result=f"- | {email}:{passw} | ratelimited proxy"
                 dead_proxies.append(active_proxy)
             printt(result) 
             return
